@@ -1,2 +1,9 @@
 @import 'tailwindcss';
 @import '@repo/tailwind-config';
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #88a1b9, #d9e2ec);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
