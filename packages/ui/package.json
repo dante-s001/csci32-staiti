@@ -14,7 +14,9 @@
     "./*": "./dist/*.js",
     "./size": "./src/size.ts",
     "./button": "./src/button.tsx",
-    "./variant": "./src/variant.ts"
+    "./variant": "./src/variant.ts",
+    "./input": "./src/input.tsx",
+    "./commonStyles": "./src/commonStyles.ts"
   },
   "scripts": {
     "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
