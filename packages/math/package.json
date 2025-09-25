@@ -1,0 +1,8 @@
+{
+  "name": "math",
+  "version": "1.0.0",
+  "main": "src/getrandomint.ts",
+  "exports": {
+    "./getRandomInt": "./src/getrandomint.ts"
+  }
+}
