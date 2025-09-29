@@ -14,6 +14,7 @@ export default function RandomNumberGameMenu({ startGame }: GuessingGameMenuProp
     const max = Number(data.get('max'))
     const maxGuesses = Number(data.get('maxGuessCount'))
     startGame({ min, max, maxGuesses })
+
     setShowSettings(false)
   }
 

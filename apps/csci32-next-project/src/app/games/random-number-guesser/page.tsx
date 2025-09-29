@@ -5,6 +5,7 @@ import RandomNumberGame from './random-number-game'
 import RandomNumberGameMenu from './random-number-game-menu'
 import { getRandomInt } from '@repo/math/getRandomInt'
 
+
 export interface StartGameProps {
   min: number
   max: number
@@ -46,6 +47,7 @@ export default function RandomNumberGuesser() {
           <RandomNumberGameMenu startGame={startGame} />
         )}
       </div>
+
     </div>
   )
 }
