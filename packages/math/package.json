@@ -1,8 +1,8 @@
 {
-  "name": "math",
+  "name": "@repo/math",
   "version": "1.0.0",
-  "main": "src/getrandomint.ts",
+  "main": "src/getRandomInt.ts",
   "exports": {
-    "./getRandomInt": "./src/getrandomint.ts"
+    "./getRandomInt": "./src/getRandomInt.ts"
   }
 }

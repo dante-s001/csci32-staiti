@@ -14,6 +14,11 @@ export default function RandomNumberGame({ randomNumber, endGame, maxGuessCount 
   function submitGuess(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const newGuessCount = guessCount + 1
+    if (guessCount >= maxGuessCount) {
+      setFeedback(`Out of guesses! The correct number was ${randomNumber}.`)
+      setGameOver(true)
+      return
+    }
     if (guess < randomNumber) {
       if (guess < randomNumber * 0.8) {
         //if the guess is more than 20% lower than the correct answer, tells them they are guessing way too low
