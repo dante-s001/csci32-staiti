@@ -18,6 +18,11 @@ export default function Home() {
                 Input Page
               </a>
             </li>
+            <li>
+              <a className="text-blue-500 underline" href="/games/random-number-guesser" target="_blank">
+                Random Number Guesser Game
+              </a>
+            </li>
           </ul>
         </div>
       </div>

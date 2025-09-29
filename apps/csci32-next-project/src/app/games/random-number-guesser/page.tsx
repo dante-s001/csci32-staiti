@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import RandomNumberGame from './random-number-game'
 import RandomNumberGameMenu from './random-number-game-menu'
-import { getRandomInt } from '@repo/math'
+import { getRandomInt } from '@repo/math/getRandomInt'
 
 export interface StartGameProps {
   min: number
@@ -38,12 +38,14 @@ export default function RandomNumberGuesser() {
   }
 
   return (
-    <div className="p-24 max-w-[800px] m-auto">
-      {isInProgress ? (
-        <RandomNumberGame endGame={endGame} randomNumber={randomNumber} maxGuessCount={maxGuessCount} />
-      ) : (
-        <RandomNumberGameMenu startGame={startGame} />
-      )}
+    <div className="p-10 bg-blue-100 max-w-[750px] mt-8 mx-auto rounded-lg">
+      <div className="p-4 max-w-[700px] mx-auto">
+        {isInProgress ? (
+          <RandomNumberGame endGame={endGame} randomNumber={randomNumber} maxGuessCount={maxGuessCount} />
+        ) : (
+          <RandomNumberGameMenu startGame={startGame} />
+        )}
+      </div>
     </div>
   )
 }
