@@ -1,18 +1,24 @@
 {
   "name": "csci32-database",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
+  "exports": {
+    ".": "./src/client.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "@types/node": "^24.6.1",
-    "prisma": "^6.16.3",
+    "@types/node": "^24.3.0",
+    "prisma": "^6.15.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@prisma/client": "6.15.0"
   }
 }
