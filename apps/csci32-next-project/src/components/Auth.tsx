@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '@repo/ui/button'
-// @ts-expect-error - Input component export in package.json
-import { Input } from '@repo/ui/input'
+import Input from '@repo/ui/input'
 import { Size } from '@repo/ui/size'
 import { Variant } from '@repo/ui/variant'
 
@@ -50,6 +49,7 @@ export default function Auth() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {isSignUpMode && (
           <Input
+            id="password"
             type="text"
             placeholder="Name (optional)"
             size={Size.LARGE}
@@ -59,6 +59,7 @@ export default function Auth() {
         )}
 
         <Input
+          id="email"
           type="email"
           placeholder="Email"
           size={Size.LARGE}
@@ -68,6 +69,7 @@ export default function Auth() {
         {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
         <Input
+          id="password"
           type="password"
           placeholder="Password"
           size={Size.LARGE}

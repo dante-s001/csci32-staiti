@@ -23,6 +23,11 @@ export default function Home() {
                 Random Number Guesser Game
               </a>
             </li>
+            <li>
+              <a className="text-blue-500 underline" href="/welcome" target="_blank">
+                Welcome Page
+              </a>
+            </li>
           </ul>
         </div>
       </div>

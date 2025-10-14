@@ -12,6 +12,7 @@ interface ButtonProps {
   onClick?: () => void
   size?: Size
   variant?: Variant
+  type?: 'button' | 'submit' | 'reset'
 }
 
 export const Button = ({
@@ -21,6 +22,7 @@ export const Button = ({
   onClick,
   size = Size.MEDIUM,
   variant = Variant.PRIMARY,
+  type = 'button',
 }: ButtonProps) => {
   const sizeCssClasses = getSizeStyles(size)
   const variantBackgroundCssClasses = getVariantBackgroundStyles(variant)
@@ -33,7 +35,7 @@ export const Button = ({
       {children}
     </a>
   ) : (
-    <button className={completedCssClasses} onClick={onClick}>
+    <button className={completedCssClasses} onClick={onClick} type={type}>
       {children}
     </button>
   )
