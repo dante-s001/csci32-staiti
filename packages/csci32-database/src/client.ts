@@ -1,4 +1,9 @@
+export * from '../prisma/seeders/seedRoles'
+export * from '../prisma/seeders/seedPermissions'
+export * from '../prisma/seeders/seedUsers'
+
 import { PrismaClient } from '@prisma/client'
+import { ADMIN_ROLE_ID } from 'csci32-database'
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient }
 
