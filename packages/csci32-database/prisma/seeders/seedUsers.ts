@@ -1,7 +1,8 @@
 import type { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+import { ADMIN_ROLE_ID, BASIC_ROLE_ID } from './seedRoles'
 
-export async function seedUsers(prisma: PrismaClient, adminRoleId: string, basicRoleId: string) {
+export async function seedUsers(prisma: PrismaClient) {
   const adminHash = await bcrypt.hash('admin123', 10)
   const basicHash = await bcrypt.hash('basic123', 10)
 
@@ -12,7 +13,7 @@ export async function seedUsers(prisma: PrismaClient, adminRoleId: string, basic
       name: 'Admin User',
       email: 'admin@example.com',
       passwordHash: adminHash,
-      role: { connect: { role_id: adminRoleId } },
+      role: { connect: { role_id: ADMIN_ROLE_ID } },
     },
   })
 
@@ -23,7 +24,7 @@ export async function seedUsers(prisma: PrismaClient, adminRoleId: string, basic
       name: 'Basic User',
       email: 'basic@example.com',
       passwordHash: basicHash,
-      role: { connect: { role_id: basicRoleId } },
+      role: { connect: { role_id: BASIC_ROLE_ID } },
     },
   })
 
