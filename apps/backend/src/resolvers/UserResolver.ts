@@ -4,7 +4,8 @@ import type { Context } from '@/utils/graphql'
 import { AuthPayload, SignUpInput } from './types/AuthTypes'
 import { SignInInput } from './types/SignInTypes'
 import { PermissionName } from 'csci32-database'
-
+import { User } from './types/User'
+import { Role } from './types/Role'
 @ObjectType()
 class User {
   @Field(() => ID)
@@ -15,6 +16,9 @@ class User {
 
   @Field(() => String, { nullable: true })
   email?: string
+
+  // Internal field used by the resolver (not exposed to clients)
+  role_id?: string
 }
 
 @Resolver()
@@ -37,5 +41,16 @@ export class UserResolver {
     if (!input.email || !input.password) throw new Error('email and password are required')
     const { user, token } = await userService.authenticateUser(input)
     return { user, token }
+  }
+
+  @FieldResolver(() => Role, { nullable: true })
+  async role(@Root() user: User, @Ctx() ctx: Context) {
+    if (!user.role_id) {
+      return null
+    }
+
+    return ctx.prisma.role.findUnique({
+      where: { role_id: user.role_id },
+    })
   }
 }
