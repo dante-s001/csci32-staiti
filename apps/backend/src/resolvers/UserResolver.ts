@@ -1,10 +1,21 @@
 import 'reflect-metadata'
-import { Resolver, Query, Field, ObjectType, Ctx, ID, Arg, Mutation, Authorized } from 'type-graphql'
+import {
+  Resolver,
+  Query,
+  Field,
+  ObjectType,
+  Ctx,
+  ID,
+  Arg,
+  Mutation,
+  Authorized,
+  FieldResolver,
+  Root,
+} from 'type-graphql'
 import type { Context } from '@/utils/graphql'
 import { AuthPayload, SignUpInput } from './types/AuthTypes'
 import { SignInInput } from './types/SignInTypes'
 import { PermissionName } from 'csci32-database'
-import { User } from './types/User'
 import { Role } from './types/Role'
 @ObjectType()
 class User {
