@@ -32,7 +32,7 @@ class User {
   role_id?: string
 }
 
-@Resolver()
+@Resolver(() => User)
 export class UserResolver {
   @Authorized(PermissionName.UserRead)
   @Query(() => [User])

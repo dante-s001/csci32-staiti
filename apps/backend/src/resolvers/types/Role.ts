@@ -6,7 +6,7 @@ export class Role {
   @Field(() => ID)
   role_id!: string
 
-  @Field()
+  @Field(() => String)
   name!: string
 
   @Field(() => [Permission])
