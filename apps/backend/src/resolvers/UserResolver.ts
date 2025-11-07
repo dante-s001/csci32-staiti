@@ -17,6 +17,7 @@ import { AuthPayload, SignUpInput } from './types/AuthTypes'
 import { SignInInput } from './types/SignInTypes'
 import { PermissionName } from 'csci32-database'
 import { Role } from './types/Role'
+import { FindManyUsersInput } from './types/FindManyUsersInput'
 @ObjectType()
 class User {
   @Field(() => ID)
@@ -34,10 +35,21 @@ class User {
 
 @Resolver(() => User)
 export class UserResolver {
-  @Authorized(PermissionName.UserRead)
+  @Authorized([PermissionName.UserRead])
   @Query(() => [User])
-  findManyUsers(@Ctx() { userService }: Context) {
-    return userService.findMany()
+  findManyUsers(
+    @Ctx() { userService }: Context,
+    @Arg('params', () => FindManyUsersInput, { nullable: true }) params?: FindManyUsersInput,
+  ) {
+    return userService.findMany(params ?? {})
+  }
+  @Authorized([PermissionName.UserRead])
+  @Query(() => Number)
+  totalUsers(
+    @Ctx() { userService }: Context,
+    @Arg('params', () => FindManyUsersInput, { nullable: true }) params?: FindManyUsersInput,
+  ) {
+    return userService.getTotalUsers(params?.filters ?? {})
   }
 
   @Mutation(() => AuthPayload)
