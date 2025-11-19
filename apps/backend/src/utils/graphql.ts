@@ -1,5 +1,6 @@
 import { UserResolver } from '@/resolvers/UserResolver'
 import { RoleResolver } from '@/resolvers/RoleResolver'
+import { PostResolver } from '@/resolvers/PostResolver' // NEW
 import { buildSchema, registerEnumType } from 'type-graphql'
 import { customAuthChecker } from '@/utils/authChecker'
 import { PermissionName, RoleName } from 'csci32-database'
@@ -8,6 +9,7 @@ import type { FastifyBaseLogger, FastifyInstance, FastifyReply, FastifyRequest }
 import { PrismaClient } from 'csci32-database'
 import { getBooleanEnvVar, getRequiredStringEnvVar } from '@/utils'
 import type { UserService } from '@/services/UserService'
+import type { PostService } from '@/services/PostService' // NEW
 import mercurius from 'mercurius'
 import mercuriusLogging from 'mercurius-logging'
 
@@ -31,6 +33,7 @@ export interface Context {
   request: FastifyRequest
   reply: FastifyReply
   userService: UserService
+  postService: PostService // NEW
   prisma: PrismaClient
   log: FastifyBaseLogger
 }
@@ -54,6 +57,7 @@ export async function registerGraphQL(fastify: FastifyInstance) {
       request,
       reply,
       userService: fastify.userService,
+      postService: fastify.postService, // NEW
       prisma: fastify.prisma,
       log: fastify.log,
     }),
