@@ -5,19 +5,27 @@ import { SortOrder } from '@/resolvers/types/SortOrder'
 import { comparePassword, hashPassword, signToken } from '@/utils/auth'
 import { PrismaClient, BASIC_ROLE_ID, Prisma } from 'csci32-database'
 
+//this interface defines some of the dependencies required for UserService
+//same as the one in PostService, it requires a client
 export interface UserServiceProps {
   prisma: PrismaClient
 }
 
+//user service class
 export class UserService {
+  //"inject" or pass the prisma client to the class so it can be used
   prisma: PrismaClient
 
+  //assign the prisma client to the class property
   constructor({ prisma }: UserServiceProps) {
     this.prisma = prisma
   }
 
+  //this function is used if the user wants to get an ordered list of users
   getOrderBy(params: FindManyUsersInput): Prisma.UserOrderByWithRelationInput {
+    //this destructures the sortcolumn and sortdirection variables from the "params" object provided to this function when it is called
     const { sortColumn, sortDirection } = params
+    //if there is a sortColumn value provided in the params, return an object
     if (sortColumn) {
       return { [sortColumn]: sortDirection ?? SortOrder.ASC }
     }

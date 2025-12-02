@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  //url      = env("DATABASE_URL")
 }
 
 enum RoleName {
@@ -18,6 +18,7 @@ enum RoleName {
 enum PermissionName {
   UserRead
   UserWrite
+  PostCreate
 }
 
 model User {
@@ -27,8 +28,38 @@ model User {
   passwordHash String
   role_id      String?
   role         Role?    @relation(fields: [role_id], references: [role_id])
+
+  // NEW RELATIONS
+  posts    Post[]
+  comments Comment[]
 }
 
+model Post {
+  id        String    @id @default(cuid())
+  title     String
+  body      String
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [user_id])
+
+  comments  Comment[]
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  body      String
+
+  // Relations to Post + User
+  postId    String
+  post      Post      @relation(fields: [postId], references: [id])
+
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [user_id])
+
+  // SELF-REFERENCING RELATION (replying to comments)
+  parentId  String?
+  parent    Comment?   @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[]  @relation("CommentReplies")
+}
 model Role {
   role_id          String @id @default(cuid())
   name             RoleName @unique
