@@ -8,4 +8,5 @@ export default defineConfig({
     //provider: 'postgresql',
     url: process.env.DATABASE_URL!,
   },
+  engine: 'classic',
 })

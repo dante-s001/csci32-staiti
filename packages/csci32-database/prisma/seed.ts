@@ -1,50 +1,29 @@
-import { PrismaClient } from 'csci32-database'
+import { PrismaClient } from '@prisma/client'
+import { seedPermissions } from './seeders/seedPermissions'
+import { seedRoles } from './seeders/seedRoles'
+import { seedUsers } from './seeders/seedUsers'
+import { seedPosts } from './seeders/seedPosts'
+
 const prisma = new PrismaClient()
 
 async function main() {
-  // Clear (children -> parents)
+  // Clear children first, then parents
   await prisma.comment.deleteMany()
   await prisma.post.deleteMany()
 
-  // Use any existing user to own seeded posts; don't author a new User in this lab.
-  const [author] = await prisma.user.findMany({ select: { user_id: true }, take: 1 })
-  if (!author) {
-    console.warn('No users found. Skipping Post seed (needs at least one user to own posts).')
-    return
-  }
+  // Run ordered seeders that share the same Prisma client
+  await seedPermissions(prisma)
+  await seedRoles(prisma)
+  await seedUsers(prisma)
+  await seedPosts(prisma)
 
-  const post1 = await prisma.post.create({
-    data: { title: 'Hello', body: 'First post', authorId: author.user_id },
-  })
-
-  await prisma.comment.createMany({
-    data: [
-      { body: 'Great post!', postId: post1.id, authorId: author.user_id },
-      { body: 'Thanks for sharing', postId: post1.id, authorId: author.user_id },
-    ],
-  })
-
-  await prisma.post.create({
-    data: {
-      title: 'Nested Example',
-      body: 'Created with comments',
-      authorId: author.user_id,
-      comments: {
-        create: [
-          { body: 'Nice!', authorId: author.user_id },
-          { body: 'Following.', authorId: author.user_id },
-        ],
-      },
-    },
-  })
-
-  console.log('Seed complete')
+  console.log('All seeds complete')
 }
 
 main()
   .catch((e) => {
     console.error(e)
-    process.exit(1)
+    process.exitCode = 1
   })
   .finally(async () => {
     await prisma.$disconnect()

@@ -27,7 +27,7 @@ registerEnumType(RoleName, {
   description: 'Enum representing valid roles for users',
 })
 
-const resolvers = [UserResolver, RoleResolver] as NonEmptyArray<Function>
+const resolvers = [UserResolver, RoleResolver, PostResolver] as NonEmptyArray<Function>
 
 export interface Context {
   request: FastifyRequest

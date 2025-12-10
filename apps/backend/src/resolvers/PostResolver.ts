@@ -9,7 +9,7 @@ import { PermissionName } from 'csci32-database'
 export class PostResolver {
   @Authorized([PermissionName.PostCreate])
   @Mutation(() => String)
-  async createPost(@Ctx() ctx: Context, @Arg('input') input: CreatePostInput): Promise<string> {
+  async createPost(@Ctx() ctx: Context, @Arg('input', () => CreatePostInput) input: CreatePostInput): Promise<string> {
     const authorUserId = getDecodedToken(ctx).sub
     const post = await ctx.postService.createForAuthor(input, authorUserId)
     return post.id
