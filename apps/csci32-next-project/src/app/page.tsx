@@ -2,55 +2,31 @@
 
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 
 export default function Home() {
   const { user } = useAuth()
   const router = useRouter()
 
-  useEffect(() => {
-    if (user) {
-      router.push('/dashboard')
-    } else {
-      router.push('/welcome')
-    }
-  }, [user, router])
+  //
+  if (user) {
+    router.push('/dashboard')
+    return <div>Loading...</div>
+  }
 
-  return <div>Loading...</div>
+  //landing page content
+  return (
+    <div className="flex flex-col justify-center mx-auto m-24 bg-gray-200 h-64 w-screen rounded-lg">
+      <div className="px-8">
+        <div className="text-2xl">Welcome to my website!</div>
+        <div className="mt-4">
+          <p className="mb-4">Please sign in to comment:</p>
+          <div className="flex gap-4">
+            <a className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" href="/welcome">
+              Sign In
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
-
-//export default function Home() {
-//  return (
-//    <div className="flex flex-col justify-center mx-auto m-24 bg-gray-200 h-64 w-screen rounded-lg">
-//      <div className="px-8">
-//        <div className="text-2xl ">Welcome to my website!</div>
-//        <div>
-//          Here are the available pages:
-//          <ul>
-//            <li>
-//              <a className="text-blue-500 underline" href="/button" target="_blank">
-//                Button Page
-//              </a>
-//            </li>
-//            <li>
-//              <a className="text-blue-500 underline" href="/input" target="_blank">
-//                Input Page
-//              </a>
-//            </li>
-//            <li>
-//              <a className="text-blue-500 underline" href="/games/random-number-guesser" target="_blank">
-//                Random Number Guesser Game
-//              </a>
-//            </li>
-//            <li>
-//              <a className="text-blue-500 underline" href="/welcome" target="_blank">
-//                Welcome Page
-//              </a>
-//            </li>
-//          </ul>
-//        </div>
-//      </div>
-//    </div>
-//  )
-//}
-//

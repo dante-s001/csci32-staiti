@@ -60,4 +60,18 @@ export class PostService {
       include: { author: true, comments: true },
     })
   }
+
+  //function to get all posts from the database (will be displayed on the website)
+  async getAllPosts() {
+    const { prisma } = this.deps
+
+    return prisma.post.findMany({
+      include: {
+        author: true,
+        comments: true,
+      },
+
+      orderBy: { id: 'desc' },
+    })
+  }
 }
