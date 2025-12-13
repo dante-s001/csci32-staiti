@@ -36,6 +36,9 @@ export class UserDTO {
   //the email field is optional, and can be null
   @Field(() => String, { nullable: true })
   email?: string | null
+
+  @Field(() => String, { nullable: true })
+  role?: string
 }
 
 //object sent back to the client

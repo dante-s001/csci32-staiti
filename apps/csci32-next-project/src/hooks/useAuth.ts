@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { gqlClient, setAuthToken, clearAuthToken } from '../services/graphql-client'
-import { graphql } from '../generated/gql'
 import type { SignUpInput, SignInInput, AuthPayload, UserDto } from '../generated/graphql'
 import { ClientError } from 'graphql-request'
+import { graphql } from '../generated/gql'
 
-// Define the mutations using codegen graphql function
 const SIGN_UP_MUTATION = graphql(`
   mutation SignUp($input: SignUpInput!) {
     signUp(input: $input) {
@@ -14,6 +13,7 @@ const SIGN_UP_MUTATION = graphql(`
         user_id
         name
         email
+        role
       }
     }
   }
@@ -27,6 +27,7 @@ const SIGN_IN_MUTATION = graphql(`
         user_id
         name
         email
+        role
       }
     }
   }

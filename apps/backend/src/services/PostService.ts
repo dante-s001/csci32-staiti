@@ -12,6 +12,8 @@ export type CreatePostInput = {
   title: string
   //body text is also required
   body: string
+  //imageUrl is optional
+  imageUrl: string
   //comments are optional, since a post may not have comments on it
   comments?: { body: string; authorId: string }[]
 }
@@ -27,14 +29,15 @@ export class PostService {
     //pass the prisma client to the function
     //this tells the function to use the existing prisma client instead of creating a new one
     const { prisma } = this.deps
-    //destructure the variable "input" to get the title, body, and comments
-    const { title, body, comments } = input
+    //destructure the variable "input" to get the title, body, imageUrl, and comments
+    const { title, body, imageUrl, comments } = input
 
     //data object to hold the post data
-    //this object uses the title, body, and authorId
+    //this object uses the title, body, imageUrl, and authorId
     const data: any = {
       title,
       body,
+      imageUrl,
       authorId: authorUserId,
     }
 
@@ -71,7 +74,7 @@ export class PostService {
         comments: true,
       },
 
-      orderBy: { id: 'desc' },
+      orderBy: { id: 'asc' },
     })
   }
 }

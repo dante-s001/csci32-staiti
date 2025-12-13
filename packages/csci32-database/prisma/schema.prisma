@@ -41,6 +41,7 @@ model Post {
   imageUrl  String
   authorId  String
   author    User      @relation(fields: [authorId], references: [user_id])
+  createdAt DateTime  @default(now())
 
   comments  Comment[]
 }

@@ -125,8 +125,16 @@ export class UserService {
       permissions: created.role?.role_permissions.map((p) => p.permission.name) ?? [],
     })
 
-    //the result is a string token
-    return { user: created, token }
+    // CHANGE THIS PART - return just the role name, not the entire object:
+    return {
+      user: {
+        user_id: created.user_id,
+        email: created.email,
+        name: created.name,
+        role: created.role?.name ?? null, // ← Return just the name string
+      },
+      token,
+    }
   }
 
   //this function is used to authenticate a user when they attempt a login
@@ -165,9 +173,15 @@ export class UserService {
       permissions: found.role?.role_permissions.map((p) => p.permission.name) ?? [],
     })
 
-    //remove the passwordHash from the user object
-    const { passwordHash, ...user } = found as any
-    //return the user object and the token
-    return { user, token }
+    // CHANGE THIS PART - construct a proper user object with just the role name:
+    return {
+      user: {
+        user_id: found.user_id,
+        email: found.email,
+        name: found.name,
+        role: found.role?.name ?? null, // ← Return just the name string
+      },
+      token,
+    }
   }
 }

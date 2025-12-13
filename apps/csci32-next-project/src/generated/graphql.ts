@@ -14,6 +14,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean }
   Int: { input: number; output: number }
   Float: { input: number; output: number }
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format. */
+  DateTimeISO: { input: any; output: any }
 }
 
 export type AuthPayload = {
@@ -22,10 +24,44 @@ export type AuthPayload = {
   user: UserDto
 }
 
+export type Comment = {
+  __typename?: 'Comment'
+  author?: Maybe<UserInfo>
+  authorId: Scalars['String']['output']
+  body: Scalars['String']['output']
+  createdAt: Scalars['DateTimeISO']['output']
+  id: Scalars['String']['output']
+  parentId?: Maybe<Scalars['String']['output']>
+  postId: Scalars['String']['output']
+}
+
+export type CreatePostInput = {
+  body: Scalars['String']['input']
+  imageUrl: Scalars['String']['input']
+  title: Scalars['String']['input']
+}
+
+export type FindManyUsersFilters = {
+  query?: InputMaybe<Scalars['String']['input']>
+}
+
+export type FindManyUsersInput = {
+  filters?: InputMaybe<FindManyUsersFilters>
+  skip?: InputMaybe<Scalars['Int']['input']>
+  sortColumn?: InputMaybe<Scalars['String']['input']>
+  sortDirection?: InputMaybe<SortOrder>
+  take?: InputMaybe<Scalars['Int']['input']>
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
+  createPost: Scalars['String']['output']
   signIn: AuthPayload
   signUp: AuthPayload
+}
+
+export type MutationCreatePostArgs = {
+  input: CreatePostInput
 }
 
 export type MutationSignInArgs = {
@@ -36,9 +72,44 @@ export type MutationSignUpArgs = {
   input: SignUpInput
 }
 
+export type Permission = {
+  __typename?: 'Permission'
+  name: Scalars['String']['output']
+  permission_id: Scalars['ID']['output']
+}
+
+export type Post = {
+  __typename?: 'Post'
+  author: UserInfo
+  authorId: Scalars['String']['output']
+  body: Scalars['String']['output']
+  comments?: Maybe<Array<Comment>>
+  createdAt: Scalars['DateTimeISO']['output']
+  id: Scalars['String']['output']
+  imageUrl: Scalars['String']['output']
+  title: Scalars['String']['output']
+}
+
 export type Query = {
   __typename?: 'Query'
-  findManyUsers: Array<User>
+  findManyUsers: Array<UserInfo>
+  posts: Array<Post>
+  totalUsers: Scalars['Float']['output']
+}
+
+export type QueryFindManyUsersArgs = {
+  params?: InputMaybe<FindManyUsersInput>
+}
+
+export type QueryTotalUsersArgs = {
+  params?: InputMaybe<FindManyUsersInput>
+}
+
+export type Role = {
+  __typename?: 'Role'
+  name: Scalars['String']['output']
+  permissions: Array<Permission>
+  role_id: Scalars['ID']['output']
 }
 
 export type SignInInput = {
@@ -52,18 +123,27 @@ export type SignUpInput = {
   password: Scalars['String']['input']
 }
 
-export type User = {
-  __typename?: 'User'
-  email?: Maybe<Scalars['String']['output']>
-  name?: Maybe<Scalars['String']['output']>
-  user_id: Scalars['ID']['output']
+/** Defines ascending or descending sort order. */
+export enum SortOrder {
+  Asc = 'ASC',
+  Desc = 'DESC',
 }
 
 export type UserDto = {
   __typename?: 'UserDTO'
   email?: Maybe<Scalars['String']['output']>
   name?: Maybe<Scalars['String']['output']>
+  role?: Maybe<Scalars['String']['output']>
   user_id: Scalars['ID']['output']
+}
+
+export type UserInfo = {
+  __typename?: 'UserInfo'
+  email: Scalars['String']['output']
+  name: Scalars['String']['output']
+  role?: Maybe<Role>
+  role_id?: Maybe<Scalars['String']['output']>
+  user_id: Scalars['String']['output']
 }
 
 export type SignUpMutationVariables = Exact<{
@@ -75,7 +155,7 @@ export type SignUpMutation = {
   signUp: {
     __typename?: 'AuthPayload'
     token: string
-    user: { __typename?: 'UserDTO'; user_id: string; name?: string | null; email?: string | null }
+    user: { __typename?: 'UserDTO'; user_id: string; name?: string | null; email?: string | null; role?: string | null }
   }
 }
 
@@ -88,7 +168,7 @@ export type SignInMutation = {
   signIn: {
     __typename?: 'AuthPayload'
     token: string
-    user: { __typename?: 'UserDTO'; user_id: string; name?: string | null; email?: string | null }
+    user: { __typename?: 'UserDTO'; user_id: string; name?: string | null; email?: string | null; role?: string | null }
   }
 }
 
@@ -132,6 +212,7 @@ export const SignUpDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'role' } },
                     ],
                   },
                 },
@@ -183,6 +264,7 @@ export const SignInDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'user_id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'email' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'role' } },
                     ],
                   },
                 },
