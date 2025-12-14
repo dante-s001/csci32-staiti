@@ -6,8 +6,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
-    "postinstall": "npm rebuild @parcel/watcher"
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
     "prettier": "^3.6.2",
@@ -15,7 +14,7 @@
     "typescript": "5.9.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": "20.x"
   },
   "packageManager": "yarn@1.22.22",
   "workspaces": [
