@@ -1,5 +1,5 @@
 'use client'
-import Input from '@repo/ui/input'
+import { Input } from '@repo/ui/input'
 import { Size } from '@repo/ui/size'
 import { Variant } from '@repo/ui/variant'
 import { Button } from '@repo/ui/button'

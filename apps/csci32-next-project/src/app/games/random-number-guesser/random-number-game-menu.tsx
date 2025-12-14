@@ -1,6 +1,6 @@
 'use client'
 import { Button } from '@repo/ui/button'
-import Input from '@repo/ui/input'
+import { Input } from '@repo/ui/input'
 import { GuessingGameMenuProps } from './page'
 import { FormEventHandler, useState } from 'react'
 

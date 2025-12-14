@@ -19,7 +19,7 @@
     "./commonStyles": "./src/commonStyles.ts"
   },
   "scripts": {
-    "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
+    "build:styles": "tailwindcss -i ./src/styles.css -o ./dist/index.css --minify",
     "build:components": "tsc",
     "check-types": "tsc --noEmit",
     "build": "yarn build:styles && yarn build:components",
