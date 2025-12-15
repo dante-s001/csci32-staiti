@@ -1,8 +1,10 @@
 'use client'
 
 import { useAuth } from '@/hooks/useAuth'
+import type { Post } from '@/generated/graphql'
 //import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 //query to get the posts from the backend
 const GET_POSTS_QUERY = `
@@ -32,7 +34,7 @@ export default function Home() {
   //const router = useRouter()
 
   //
-  const [posts, setPosts] = useState<any[]>([])
+  const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
 
   //fetch the posts using the query to the api
@@ -102,16 +104,16 @@ export default function Home() {
           <div className="text-2xl flex-1 text-center font-bold">My favorite games</div>
           {user ? (
             <div className="flex-1 flex justify-end items-center gap-4">
-              <a className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" href="/dashboard">
+              <Link className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" href="/dashboard">
                 Account
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="flex-1 flex justify-end items-center gap-4">
               <p className="">Please sign in to rate posts:</p>
-              <a className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" href="/welcome">
+              <Link className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" href="/welcome">
                 Sign In
-              </a>
+              </Link>
             </div>
           )}
         </div>
@@ -123,7 +125,7 @@ export default function Home() {
         </h2>
         <h2 className="text-xl my-4 mx-4">
           Below you will find some of my favorite games. Feel free to take a look, and I hope this makes you want to try
-          some of them if you haven't yet!
+          some of them if you haven&apos;t yet!
         </h2>
       </div>
       <hr className="border-2 mx-4 rounded-lg" />
@@ -144,7 +146,7 @@ export default function Home() {
               {post.comments && post.comments.length > 0 && (
                 <div className="mt-4 pl-4 border-l-2 border-gray-300">
                   <p className="font-semibold text-sm">Comments:</p>
-                  {post.comments.map((comment: any) => (
+                  {post.comments.map((comment) => (
                     <div key={comment.id} className="mt-2">
                       <p className="text-gray-600">{comment.body}</p>
                     </div>

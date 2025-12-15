@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 import { getSizeStyles, Size } from './size'
 import { getCommonStyles } from './commonStyles'
 import { getVariantBackgroundStyles, getVariantOutlineStyles, Variant } from './variant'
+import Link from 'next/link'
 
 interface ButtonProps {
   children: ReactNode
@@ -31,9 +32,9 @@ export const Button = ({
   const completedCssClasses = `${sizeCssClasses} ${variantBackgroundCssClasses} ${variantOutlineCssClasses} ${commonCssClasses} ${className}`
 
   return href ? (
-    <a href={href} className={completedCssClasses} target="blank">
+    <Link href={href} className={completedCssClasses} target="blank">
       {children}
-    </a>
+    </Link>
   ) : (
     <button className={completedCssClasses} onClick={onClick} type={type}>
       {children}

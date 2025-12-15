@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { gqlClient } from '../services/graphql-client'
 import { ClientError } from 'graphql-request'
-import type { CreatePostInput } from '../generated/graphql'
+import type { CreatePostInput, Mutation } from '../generated/graphql'
 
 // Use raw string instead of graphql() function
 const CREATE_POST_MUTATION = `
@@ -31,7 +31,7 @@ export function usePost() {
       console.log('Auth token exists:', !!token)
       console.log('Creating post with input:', input)
 
-      const result: any = await gqlClient.request(CREATE_POST_MUTATION, { input })
+      const result = await gqlClient.request<Pick<Mutation, 'createPost'>>(CREATE_POST_MUTATION, { input })
       console.log('Create post result:', result)
 
       if (result.createPost) {
