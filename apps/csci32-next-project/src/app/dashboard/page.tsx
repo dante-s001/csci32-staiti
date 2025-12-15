@@ -103,8 +103,8 @@ export default function DashboardPage() {
             </h2>
             <div className="space-y-2 text-gray-600">
               <p>
-                You've successfully signed in. Your authentication token is stored securely and will be used for all API
-                requests.
+                You&apos;ve successfully signed in. Your authentication token is stored securely and will be used for
+                all API requests.
               </p>
               {user && (
                 <div className="mt-4 p-4 bg-gray-50 rounded-md">
