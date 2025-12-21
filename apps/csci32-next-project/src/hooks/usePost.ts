@@ -1,14 +1,17 @@
+//this file is a hook
+//it sends infrommation to PostResolver.ts for the create post mutation
 import { useState } from 'react'
 import { gqlClient } from '../services/graphql-client'
 import { ClientError } from 'graphql-request'
-import type { CreatePostInput, Mutation } from '../generated/graphql'
+import type { CreatePostInput } from '../generated/graphql'
+import { graphql } from '../generated/gql'
 
-// Use raw string instead of graphql() function
-const CREATE_POST_MUTATION = `
+//this defines what information is sent to the backend when creating a post
+const CREATE_POST_MUTATION = graphql(`
   mutation CreatePost($input: CreatePostInput!) {
     createPost(input: $input)
   }
-`
+`)
 
 export function usePost() {
   const [isLoading, setIsLoading] = useState(false)
@@ -31,7 +34,7 @@ export function usePost() {
       console.log('Auth token exists:', !!token)
       console.log('Creating post with input:', input)
 
-      const result = await gqlClient.request<Pick<Mutation, 'createPost'>>(CREATE_POST_MUTATION, { input })
+      const result = await gqlClient.request(CREATE_POST_MUTATION, { input })
       console.log('Create post result:', result)
 
       if (result.createPost) {

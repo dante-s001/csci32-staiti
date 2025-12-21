@@ -72,12 +72,6 @@ export type MutationSignUpArgs = {
   input: SignUpInput
 }
 
-export type Permission = {
-  __typename?: 'Permission'
-  name: Scalars['String']['output']
-  permission_id: Scalars['ID']['output']
-}
-
 export type Post = {
   __typename?: 'Post'
   author: UserInfo
@@ -103,13 +97,6 @@ export type QueryFindManyUsersArgs = {
 
 export type QueryTotalUsersArgs = {
   params?: InputMaybe<FindManyUsersInput>
-}
-
-export type Role = {
-  __typename?: 'Role'
-  name: Scalars['String']['output']
-  permissions: Array<Permission>
-  role_id: Scalars['ID']['output']
 }
 
 export type SignInInput = {
@@ -141,7 +128,7 @@ export type UserInfo = {
   __typename?: 'UserInfo'
   email: Scalars['String']['output']
   name: Scalars['String']['output']
-  role?: Maybe<Role>
+  role?: Maybe<Scalars['String']['output']>
   role_id?: Maybe<Scalars['String']['output']>
   user_id: Scalars['String']['output']
 }
@@ -171,6 +158,12 @@ export type SignInMutation = {
     user: { __typename?: 'UserDTO'; user_id: string; name?: string | null; email?: string | null; role?: string | null }
   }
 }
+
+export type CreatePostMutationVariables = Exact<{
+  input: CreatePostInput
+}>
+
+export type CreatePostMutation = { __typename?: 'Mutation'; createPost: string }
 
 export const SignUpDocument = {
   kind: 'Document',
@@ -276,3 +269,36 @@ export const SignInDocument = {
     },
   ],
 } as unknown as DocumentNode<SignInMutation, SignInMutationVariables>
+export const CreatePostDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'mutation',
+      name: { kind: 'Name', value: 'CreatePost' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+          type: { kind: 'NonNullType', type: { kind: 'NamedType', name: { kind: 'Name', value: 'CreatePostInput' } } },
+        },
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'createPost' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'input' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'input' } },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<CreatePostMutation, CreatePostMutationVariables>

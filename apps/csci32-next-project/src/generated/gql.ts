@@ -16,12 +16,14 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 type Documents = {
   '\n  mutation SignUp($input: SignUpInput!) {\n    signUp(input: $input) {\n      token\n      user {\n        user_id\n        name\n        email\n        role\n      }\n    }\n  }\n': typeof types.SignUpDocument
   '\n  mutation SignIn($input: SignInInput!) {\n    signIn(input: $input) {\n      token\n      user {\n        user_id\n        name\n        email\n        role\n      }\n    }\n  }\n': typeof types.SignInDocument
+  '\n  mutation CreatePost($input: CreatePostInput!) {\n    createPost(input: $input)\n  }\n': typeof types.CreatePostDocument
 }
 const documents: Documents = {
   '\n  mutation SignUp($input: SignUpInput!) {\n    signUp(input: $input) {\n      token\n      user {\n        user_id\n        name\n        email\n        role\n      }\n    }\n  }\n':
     types.SignUpDocument,
   '\n  mutation SignIn($input: SignInInput!) {\n    signIn(input: $input) {\n      token\n      user {\n        user_id\n        name\n        email\n        role\n      }\n    }\n  }\n':
     types.SignInDocument,
+  '\n  mutation CreatePost($input: CreatePostInput!) {\n    createPost(input: $input)\n  }\n': types.CreatePostDocument,
 }
 
 /**
@@ -50,6 +52,12 @@ export function graphql(
 export function graphql(
   source: '\n  mutation SignIn($input: SignInInput!) {\n    signIn(input: $input) {\n      token\n      user {\n        user_id\n        name\n        email\n        role\n      }\n    }\n  }\n',
 ): (typeof documents)['\n  mutation SignIn($input: SignInInput!) {\n    signIn(input: $input) {\n      token\n      user {\n        user_id\n        name\n        email\n        role\n      }\n    }\n  }\n']
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: '\n  mutation CreatePost($input: CreatePostInput!) {\n    createPost(input: $input)\n  }\n',
+): (typeof documents)['\n  mutation CreatePost($input: CreatePostInput!) {\n    createPost(input: $input)\n  }\n']
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {}

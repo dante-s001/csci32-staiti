@@ -130,19 +130,28 @@ export default function Home() {
       </div>
       <hr className="border-2 mx-4 rounded-lg" />
       <div className="POST CONTENT px-8 py-6 max-w-3xl mx-auto w-full">
+        {/*shows the state of the posts, such as if it is loading or if there were no posts found */}
         {loading ? (
           <p>Loading posts...</p>
         ) : posts.length === 0 ? (
           <p>No posts yet.</p>
         ) : (
+          /*use the post array from the query to create post elements */
+          /*for each post in the array create a new post element using the following: */
           posts.map((post) => (
+            /*get the post id as the key */
             <div key={post.id} className="mb-6 p-4 bg-white rounded shadow">
+              {/*get the post image url and set the alt as the post title (not really the perfect solution, it would be best to add the alt to the post information in the database) */}
               {post.imageUrl && (
                 <img src={post.imageUrl} alt={post.title} className="w-full h-64 object-cover rounded mb-4" />
               )}
+              {/*get the post title */}
               <h2 className="text-xl font-bold mb-2">{post.title}</h2>
+              {/*get the post body */}
               <p className="text-gray-700 mb-2">{post.body}</p>
+              {/*get the post author */}
               <p className="text-sm text-gray-500">By: {post.author?.name || 'Anonymous'}</p>
+              {/*get the post comments, if any are present */}
               {post.comments && post.comments.length > 0 && (
                 <div className="mt-4 pl-4 border-l-2 border-gray-300">
                   <p className="font-semibold text-sm">Comments:</p>

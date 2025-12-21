@@ -1,3 +1,5 @@
+//this file is a hook
+//it sends information to the UserResolver.ts file for sign up and sign in mutations
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { gqlClient, setAuthToken, clearAuthToken } from '../services/graphql-client'
@@ -5,6 +7,7 @@ import type { SignUpInput, SignInInput, AuthPayload, UserDto } from '../generate
 import { ClientError } from 'graphql-request'
 import { graphql } from '../generated/gql'
 
+//this defines what information is sent to the backend for user sign up
 const SIGN_UP_MUTATION = graphql(`
   mutation SignUp($input: SignUpInput!) {
     signUp(input: $input) {
@@ -19,6 +22,7 @@ const SIGN_UP_MUTATION = graphql(`
   }
 `)
 
+//this defines what information is sent to the backend for user sign in
 const SIGN_IN_MUTATION = graphql(`
   mutation SignIn($input: SignInInput!) {
     signIn(input: $input) {
@@ -33,6 +37,7 @@ const SIGN_IN_MUTATION = graphql(`
   }
 `)
 
+//this part manages the state of authentication (loading, error)
 export function useAuth() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
